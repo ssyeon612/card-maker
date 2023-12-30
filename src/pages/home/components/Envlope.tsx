@@ -1,9 +1,12 @@
+import { Link } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 
 const Envlope = () => {
   return (
     <Card>
-      <Heart></Heart>
+      <Link to="/card">
+        <Heart></Heart>
+      </Link>
     </Card>
   );
 };
@@ -14,11 +17,11 @@ export default Envlope;
 const Card = styled.div`
   width: 0;
   height: 0;
-  border-top: 100px solid #fff;
-  border-right: 150px solid #eee;
-  border-bottom: 100px solid #ddd;
-  border-left: 150px solid #eee;
-  border-radius: 10px;
+  border-top: 150px solid #fff;
+  border-right: 250px solid #eee;
+  border-bottom: 150px solid #ddd;
+  border-left: 250px solid #eee;
+  border-radius: 20px;
 `;
 
 // 하트
@@ -37,6 +40,7 @@ const Heart = styled.div`
   background: #ff3838;
   transform: translate(-50%, -50%) rotate(45deg);
   animation: ${heartbeat} 1.4s linear infinite;
+  cursor: pointer;
   &::before {
     content: "";
     position: absolute;

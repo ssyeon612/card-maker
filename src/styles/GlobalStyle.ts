@@ -12,10 +12,16 @@ export const GlobalStyle = createGlobalStyle`
 
   body {
     background-color: #edeaea;
-    height: 100%;
+    height: 100vh;
     width: 100%;
-    /* position: relative; */
-    /* margin: 0 auto; */
+  }
+
+  #root {
+    height: 100%
+  }
+
+  header {
+    position: fixed;
   }
 
   a {

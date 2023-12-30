@@ -3,7 +3,7 @@ import styled from "styled-components";
 const Header = () => {
   return (
     <header>
-      <Title>Happy New Year 🎉</Title>
+      <Title>Happy 2024 🎉</Title>
     </header>
   );
 };
