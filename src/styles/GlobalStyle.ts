@@ -10,6 +10,14 @@ export const GlobalStyle = createGlobalStyle`
     font-family: "Nanum Gothic", sans-serif;
   }
 
+  body {
+    background-color: #edeaea;
+    height: 100%;
+    width: 100%;
+    /* position: relative; */
+    /* margin: 0 auto; */
+  }
+
   a {
     color: inherit;
     text-decoration: none;
