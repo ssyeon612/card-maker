@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export default function Card() {
+export default function CardArea() {
   return (
     <Card>
       <img src="./src/assets/images/sample.jpeg" alt="sample" />

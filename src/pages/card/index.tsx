@@ -2,94 +2,89 @@ import axios from "axios";
 import { useState } from "react";
 import styled from "styled-components";
 
+import SelectColor from "./components/SelectColor";
+import SelectImage from "./components/SelectImage";
+
 function Home() {
+  const [cardColor, setCardColor] = useState("#fff2f2");
   const [prompt, setPrompt] = useState("");
-  const [imageURL, setImage] = useState(
-    "https://oaidalleapiprodscus.blob.core.windows.net/private/org-YFFprkL6FjWARHcFquX5i2AI/user-PFC4WKeH6nsn2STYyylyCS41/img-25SA1yfhonxyVQpnEOJxvARX.png?st=2023-12-26T08%3A54%3A09Z&se=2023-12-26T10%3A54%3A09Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2023-12-25T23%3A11%3A13Z&ske=2023-12-26T23%3A11%3A13Z&sks=b&skv=2021-08-06&sig=TdBojdlUlkL8t1eUCD6jaW21E%2B06T2nrAf3kmALrj7k%3D",
-  );
-  // const colors = ["#FFC5C5", "#FFEBD8", "#C7DCA7", "#89B9AD"];
+  const [imageURL, setImage] = useState("./src/assets/images/sample.jpeg");
+  const [content, setContent] = useState("");
+ 
 
-  const { OPENAI_API_KEY } = import.meta.env;
-  const createImg = async () => {
-    await axios
-      .post(
-        "https://api.openai.com/v1/images/generations",
-        {
-          prompt: prompt,
-          n: 1,
-          size: "1024x1024",
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${OPENAI_API_KEY}`,
-            "Content-Type": "application/json",
-          },
-        },
-      )
-      .then((response) => {
-        setImage(response.data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  };
+  // const { OPENAI_API_KEY } = import.meta.env;
+  // const createImage = async () => {
+  //   await axios
+  //     .post(
+  //       "https://api.openai.com/v1/images/generations",
+  //       {
+  //         prompt: prompt,
+  //         n: 1,
+  //         size: "1024x1024",
+  //       },
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${OPENAI_API_KEY}`,
+  //           "Content-Type": "application/json",
+  //         },
+  //       },
+  //     )
+  //     .then((response) => {
+  //       if (response.data[0].url !== "") {
+  //         setImage(response.data[0].url);
+  //        }
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error:", error);
+  //     });
+  // };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPrompt(e.target.value);
+  const searchImage = (serachText: string) => {
+    setPrompt(serachText);
+    if (prompt === "") return;
+    // createImage();
   };
 
   return (
     <Container>
-      
-      <ContentWrap>
-        <SelectArea>
-          <li>
-            {/* {colors.map((color, index) => (
-              <span key={index}>
-                <input type="radio" value={color} />
-              </span>
-            ))} */}
-          </li>
-          <li>Color</li>
-          <li>
-            <input onChange={handleChange} />
-          </li>
-          <button>Submit</button>
-        </SelectArea>
-        <Card>
-          <img src="./src/assets/images/sample.jpeg" alt="sample" />
-          <TextArea rows={10} />
+      <Wrapper>
+        <div className="selectBox">
+          <SelectColor setColor={setCardColor}></SelectColor>
+          <SelectImage setImage={searchImage}></SelectImage>
+        </div>
+        <Card backgroundColor={cardColor}>
+          <img src={imageURL} alt="sample" />
+          <TextArea rows={10} onChange={(e) => setContent(e.target.value)} />
+          <SendButton>전송</SendButton>
         </Card>
-      </ContentWrap>
+      </Wrapper>
     </Container>
   );
 }
 
 const Container = styled.div`
+  height: 100%;
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
-const ContentWrap = styled.div`
+const Wrapper = styled.div`
   display: flex;
-  margin: 0 auto;
-`;
+  gap: 30px;
 
-const SelectArea = styled.ul`
-  margin: 30px;
-  li {
-    background-color: white;
-    border-radius: 10px;
-    height: 50px;
-    width: 400px;
-    margin: 20px;
+  .selectBox {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    justify-content: center;
   }
 `;
 
 const Card = styled.div`
   height: 600px;
   width: 400px;
-  background-color: #fff2f2;
+  background-color: ${(props) => props.backgroundColor};
   border-radius: 10px;
   display: flex;
   gap: 50px;
@@ -109,7 +104,6 @@ const TextArea = styled.textarea`
   border: none;
   height: 270px;
   font-size: 16px;
-  /* background-attachment: local; */
   background-image: linear-gradient(to right, white 10px, transparent 10px),
     linear-gradient(to left, white 10px, transparent 10px),
     repeating-linear-gradient(white, white 30px, #ccc 30px, #ccc 31px, white 31px);
@@ -118,6 +112,14 @@ const TextArea = styled.textarea`
   &:focus {
     outline: none;
   }
+`;
+
+const SendButton = styled.button`
+  border: none;
+  padding: 0.5rem 1rem;
+  background-color: tomato;
+  border-radius: 10px;
+  cursor: pointer;
 `;
 
 export default Home;
